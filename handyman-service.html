@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מנדימן - שירותי איש מקצוע נהריה והסביבה</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%);
+            padding: 40px 30px;
+            text-align: center;
+            color: #1a1a1a;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+        }
+
+        .call-button {
+            background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 20px 40px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(253, 183, 20, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 20px 0;
+        }
+
+        .call-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(253, 183, 20, 0.5);
+        }
+
+        .call-button:active {
+            transform: translateY(0);
+        }
+
+        .form-screen {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #FDB714;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .photo-upload {
+            border: 2px dashed #e0e0e0;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .photo-upload:hover {
+            border-color: #FDB714;
+            background: #FFFBF0;
+        }
+
+        .photo-upload input {
+            display: none;
+        }
+
+        .photo-preview {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .photo-preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .location-group {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .location-input {
+            flex: 1;
+        }
+
+        .get-location-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background 0.3s;
+        }
+
+        .get-location-btn:hover:not(:disabled) {
+            background: #45a049;
+        }
+
+        .get-location-btn:disabled {
+            background: #9E9E9E;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%);
+            color: #1a1a1a;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .back-btn {
+            background: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background: #d0d0d0;
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: #FDB714;
+            margin-bottom: 20px;
+        }
+
+        .success-screen h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .success-screen p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .required {
+            color: #f5576c;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .call-button {
+                font-size: 18px;
+                padding: 15px 30px;
+            }
+
+            .location-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .get-location-btn {
+                width: 100%;
+            }
+
+            .welcome-screen h2 {
+                font-size: 22px;
+            }
+
+            .welcome-screen > div[style*="grid"] {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="margin-bottom: 20px;">
+                <svg width="120" height="120" viewBox="0 0 120 120" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));">
+                    <!-- Background circle -->
+                    <circle cx="60" cy="60" r="55" fill="white" opacity="0.95"/>
+                    
+                    <!-- Head -->
+                    <circle cx="60" cy="35" r="12" fill="#FFD700" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Body -->
+                    <rect x="52" y="45" width="16" height="25" rx="3" fill="#4A90E2" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Arms -->
+                    <line x1="52" y1="52" x2="42" y2="60" stroke="#4A90E2" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="68" y1="52" x2="78" y2="60" stroke="#4A90E2" stroke-width="4" stroke-linecap="round"/>
+                    
+                    <!-- Legs -->
+                    <line x1="56" y1="70" x2="52" y2="85" stroke="#4A90E2" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="64" y1="70" x2="68" y2="85" stroke="#4A90E2" stroke-width="4" stroke-linecap="round"/>
+                    
+                    <!-- Hammer in hand -->
+                    <g transform="translate(78, 60)">
+                        <rect x="0" y="-2" width="15" height="4" fill="#8B4513" rx="1"/>
+                        <rect x="13" y="-8" width="4" height="12" fill="#666" rx="1"/>
+                    </g>
+                    
+                    <!-- Wrench in other hand -->
+                    <g transform="translate(30, 60)">
+                        <path d="M 0,0 L 12,0 L 12,3 L 3,3 L 3,6 L 0,6 Z" fill="#888"/>
+                        <circle cx="11" cy="1.5" r="2.5" fill="none" stroke="#888" stroke-width="1.5"/>
+                    </g>
+                    
+                    <!-- Tool belt -->
+                    <rect x="50" y="60" width="20" height="6" fill="#8B4513" stroke="#333" stroke-width="1"/>
+                    
+                    <!-- Hard hat -->
+                    <ellipse cx="60" cy="28" rx="13" ry="4" fill="#FFD700" stroke="#333" stroke-width="1.5"/>
+                    <path d="M 47,28 Q 60,18 73,28" fill="#FFD700" stroke="#333" stroke-width="1.5"/>
+                    
+                    <!-- Face details -->
+                    <circle cx="56" cy="33" r="1.5" fill="#333"/>
+                    <circle cx="64" cy="33" r="1.5" fill="#333"/>
+                    <path d="M 56,38 Q 60,40 64,38" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1 style="font-size: 36px; font-weight: bold; margin-bottom: 5px; color: #1a1a1a;">מנדימן</h1>
+            <p style="font-size: 18px; color: #1a1a1a;">שירותי איש מקצוע מקצועיים ומהירים</p>
+            <p style="font-size: 16px; opacity: 0.8; margin-top: 5px; color: #1a1a1a;">📍 נהריה והסביבה • זמינים 24/7</p>
+        </div>
+
+        <div class="content">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2 style="color: #333; margin-bottom: 15px; font-size: 26px;">מומחים בשיפוצים ותיקונים</h2>
+                <p style="color: #666; margin-bottom: 30px; font-size: 17px; line-height: 1.6;">
+                    שירותי שיפוצים מקצועיים לבית ולעסק בנהריה והסביבה<br>
+                    ניסיון רב, אמינות מלאה, מחירים הוגנים
+                </p>
+                
+                <!-- Services Grid -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; text-align: center;">
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🔨</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">שיפוצים</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">דירות ובתים</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🚰</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">אינסטלציה</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">תיקונים ושדרוגים</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🧱</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">עבודות גבס</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">קירות ותקרות</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🎨</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">צביעה</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">פנים וחוץ</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🏗️</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">בנייה קלה</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">קירות וחלוקות</div>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #FDB714 0%, #FFCE0A 100%); padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                        <div style="font-size: 35px; margin-bottom: 8px;">🏠</div>
+                        <div style="font-weight: 600; color: #1a1a1a; font-size: 15px;">תחזוקה</div>
+                        <div style="color: #333; font-size: 13px; margin-top: 5px;">כללית ושוטפת</div>
+                    </div>
+                </div>
+
+                <button class="call-button" onclick="showForm()">📞 הזמן שירות עכשיו</button>
+                
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #FDB71420 0%, #FFCE0A20 100%); border-radius: 15px; border-right: 4px solid #FDB714;">
+                    <h3 style="color: #FDB714; margin-bottom: 15px; font-size: 20px;">למה לבחור במנדימן?</h3>
+                    <ul style="list-style: none; color: #333; text-align: right; line-height: 2;">
+                        <li style="margin-bottom: 10px;"><strong>✅ ניסיון של שנים</strong> - מומחיות בכל סוגי השיפוצים</li>
+                        <li style="margin-bottom: 10px;"><strong>✅ זמינות גבוהה</strong> - מגיבים במהירות לכל קריאה</li>
+                        <li style="margin-bottom: 10px;"><strong>✅ אמינות מוכחת</strong> - עשרות לקוחות מרוצים</li>
+                        <li style="margin-bottom: 10px;"><strong>✅ מחירים הוגנים</strong> - ללא עלויות נסתרות</li>
+                        <li><strong>✅ אחריות לעבודה</strong> - ביצוע מקצועי ואיכותי</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 25px; padding: 20px; background: #FFFBF0; border-radius: 10px; text-align: center; border: 2px solid #FDB714;">
+                    <p style="color: #1a1a1a; font-weight: 600; font-size: 18px; margin-bottom: 10px;">
+                        📍 משרתים את אזור נהריה והסביבה
+                    </p>
+                    <p style="color: #333; font-size: 14px;">
+                        נהריה • עכו • מעלות • כרמיאל • והיישובים הסמוכים
+                    </p>
+                </div>
+            </div>
+
+            <!-- Form Screen -->
+            <div class="form-screen" id="formScreen">
+                <button class="back-btn" onclick="showWelcome()">← חזרה</button>
+                <h2 style="color: #333; margin-bottom: 10px;">פרטי הפנייה</h2>
+                <p style="color: #666; margin-bottom: 25px; font-size: 15px;">מלא את הפרטים ונחזור אליך בהקדם</p>
+                
+                <form id="serviceForm">
+                    <div class="form-group">
+                        <label>סוג השירות הנדרש <span class="required">*</span></label>
+                        <select id="serviceType" name="serviceType" required style="cursor: pointer;">
+                            <option value="">בחר סוג שירות...</option>
+                            <option value="שיפוצים כלליים">🔨 שיפוצים כלליים</option>
+                            <option value="אינסטלציה">🚰 אינסטלציה</option>
+                            <option value="עבודות גבס">🧱 עבודות גבס</option>
+                            <option value="צביעה">🎨 צביעה</option>
+                            <option value="בנייה קלה">🏗️ בנייה קלה</option>
+                            <option value="תחזוקה">🏠 תחזוקה כללית</option>
+                            <option value="אחר">🔧 אחר</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>שם מלא <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" placeholder="איך קוראים לך?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>מספר טלפון <span class="required">*</span></label>
+                        <input type="tel" id="phone" name="phone" placeholder="050-1234567" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>מיקום <span class="required">*</span></label>
+                        <div class="location-group">
+                            <div class="location-input">
+                                <input type="text" id="location" name="location" placeholder="כתובת מלאה" required>
+                            </div>
+                            <button type="button" class="get-location-btn" onclick="getLocation()">📍 מיקום נוכחי</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>פרטי העבודה / התיקון <span class="required">*</span></label>
+                        <textarea id="problem" name="problem" placeholder="תאר/י את העבודה הנדרשת בפירוט (גודל, חומרים, דחיפות וכו')..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>תמונות מהמקום / הנזק (מומלץ)</label>
+                        <div class="photo-upload" id="photoUploadArea">
+                            <div style="font-size: 40px; margin-bottom: 10px;">📷</div>
+                            <p style="color: #666;">לחץ להעלאת תמונות</p>
+                            <p style="color: #999; font-size: 14px; margin-top: 5px;">תמונות עוזרות להבין את היקף העבודה - עד 3 תמונות</p>
+                            <input type="file" id="photos" name="photos" accept="image/*" multiple>
+                        </div>
+                        <div class="photo-preview" id="photoPreview"></div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">שלח פנייה לקבלת הצעת מחיר</button>
+                </form>
+            </div>
+
+            <!-- Success Screen -->
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon">✓</div>
+                <h2>הפנייה נשלחה בהצלחה!</h2>
+                <p style="font-size: 17px; line-height: 1.7;">תודה רבה על פנייתך למנדימן!</p>
+                <p style="margin-top: 15px; color: #555;">נחזור אליך תוך זמן קצר עם הצעת מחיר והתייעצות מקצועית.</p>
+                <div style="margin-top: 25px; padding: 20px; background: #FFFBF0; border-radius: 10px; border: 2px solid #FDB714;">
+                    <p style="color: #1a1a1a; font-weight: 600; margin-bottom: 10px;">מה קורה עכשיו?</p>
+                    <p style="color: #333; font-size: 15px; line-height: 1.6;">
+                        1️⃣ בודקים את הפרטים שלך<br>
+                        2️⃣ מכינים הצעת מחיר מדויקת<br>
+                        3️⃣ יוצרים איתך קשר ב-WhatsApp או בטלפון
+                    </p>
+                </div>
+                <button class="call-button" onclick="resetForm()" style="margin-top: 30px; font-size: 16px;">פנייה נוספת</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPhotos = [];
+
+        function showForm() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('formScreen').style.display = 'block';
+        }
+
+        function showWelcome() {
+            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function showSuccess() {
+            document.getElementById('formScreen').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
+        }
+
+        function resetForm() {
+            document.getElementById('serviceForm').reset();
+            selectedPhotos = [];
+            document.getElementById('photoPreview').innerHTML = '';
+            document.getElementById('successScreen').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+        }
+
+        function getLocation() {
+            const locationInput = document.getElementById('location');
+            const locationBtn = document.querySelector('.get-location-btn');
+            
+            if (!navigator.geolocation) {
+                alert('הדפדפן שלך לא תומך באיתור מיקום. אנא הזן כתובת ידנית.');
+                return;
+            }
+            
+            // Disable button and show loading
+            locationBtn.disabled = true;
+            locationBtn.textContent = 'מאתר...';
+            locationInput.value = 'מאתר מיקום...';
+            
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    try {
+                        // Try to get address from coordinates
+                        const response = await fetch(
+                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=he`,
+                            {
+                                headers: {
+                                    'User-Agent': 'HandymanApp/1.0'
+                                }
+                            }
+                        );
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            
+                            // Extract useful parts of address
+                            let address = '';
+                            if (data.address) {
+                                const parts = [];
+                                if (data.address.road) parts.push(data.address.road);
+                                if (data.address.house_number) parts.push(data.address.house_number);
+                                if (data.address.city || data.address.town || data.address.village) {
+                                    parts.push(data.address.city || data.address.town || data.address.village);
+                                }
+                                address = parts.join(', ') || data.display_name;
+                            } else {
+                                address = data.display_name;
+                            }
+                            
+                            locationInput.value = address;
+                        } else {
+                            // If geocoding fails, just use coordinates
+                            locationInput.value = `קואורדינטות: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                        }
+                    } catch (error) {
+                        console.error('Geocoding error:', error);
+                        locationInput.value = `קואורדינטות: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    }
+                    
+                    // Re-enable button
+                    locationBtn.disabled = false;
+                    locationBtn.textContent = '📍 מיקום נוכחי';
+                },
+                (error) => {
+                    // Handle different error types
+                    let errorMessage = '';
+                    
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage = 'נדחתה הרשאה לגישה למיקום. אנא אפשר גישה למיקום בהגדרות הדפדפן.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage = 'מידע על המיקום לא זמין. נסה שוב או הזן כתובת ידנית.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage = 'פג הזמן לקבלת המיקום. נסה שוב.';
+                            break;
+                        default:
+                            errorMessage = 'שגיאה באיתור מיקום. אנא הזן כתובת ידנית.';
+                    }
+                    
+                    alert(errorMessage);
+                    locationInput.value = '';
+                    
+                    // Re-enable button
+                    locationBtn.disabled = false;
+                    locationBtn.textContent = '📍 מיקום נוכחי';
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        function previewPhotos() {
+            const input = document.getElementById('photos');
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+            selectedPhotos = [];
+
+            if (input.files && input.files.length > 0) {
+                if (input.files.length > 3) {
+                    alert('ניתן להעלות עד 3 תמונות בלבד');
+                    input.value = '';
+                    return;
+                }
+
+                Array.from(input.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                        selectedPhotos.push(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        function sendToWhatsApp(data) {
+            const phoneNumber = '972506989822';
+            
+            let message = `🔧 *מנדימן - פנייה חדשה לשירות*\n`;
+            message += `📍 *נהריה והסביבה*\n\n`;
+            message += `🛠️ *סוג שירות:* ${data.serviceType}\n`;
+            message += `👤 *שם:* ${data.name}\n`;
+            message += `📱 *טלפון:* ${data.phone}\n`;
+            message += `📍 *מיקום:* ${data.location}\n\n`;
+            message += `📋 *פרטי העבודה:*\n${data.problem}\n\n`;
+            message += `🕐 *זמן פנייה:* ${data.timestamp}`;
+            
+            if (data.photos.length > 0) {
+                message += `\n\n📷 *צורפו ${data.photos.length} תמונות למייל/WhatsApp*`;
+            }
+
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Photo upload area click handler
+            const photoUploadArea = document.getElementById('photoUploadArea');
+            const photosInput = document.getElementById('photos');
+            
+            if (photoUploadArea && photosInput) {
+                photoUploadArea.addEventListener('click', function() {
+                    photosInput.click();
+                });
+
+                photosInput.addEventListener('change', previewPhotos);
+            }
+
+            // Form submit handler
+            const form = document.getElementById('serviceForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = {
+                        serviceType: document.getElementById('serviceType').value,
+                        name: document.getElementById('name').value,
+                        phone: document.getElementById('phone').value,
+                        location: document.getElementById('location').value,
+                        problem: document.getElementById('problem').value,
+                        photos: selectedPhotos,
+                        timestamp: new Date().toLocaleString('he-IL')
+                    };
+
+                    sendToWhatsApp(formData);
+                    showSuccess();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
