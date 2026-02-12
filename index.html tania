@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משרד עורכי דין - כהן ושות'</title>
+    <style>
+        /* הגדרות עיצוב כלליות */
+        :root {
+            --primary-color: #1a2a3a; /* כחול כהה יוקרתי */
+            --accent-color: #c5a059; /* זהב - משדר יוקרה */
+            --text-color: #333;
+            --light-bg: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* סרגל ניווט */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* חלק ראשי (Hero) */
+        .hero {
+            background-color: var(--primary-color);
+            color: white;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ddd;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #b08d4b;
+        }
+
+        /* אודות ושירותים */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            background-color: #ddd;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+
+        /* כרטיסי שירותים */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 30px;
+            border: 1px solid #eee;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* טופס יצירת קשר */
+        .contact-section {
+            background-color: var(--light-bg);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        /* תחתית */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* התאמה למובייל */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* בתפריט אמיתי נרצה להוסיף כפתור המבורגר */
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">כהן ושות' | משרד עורכי דין</div>
+                <ul class="nav-links">
+                    <li><a href="#home">ראשי</a></li>
+                    <li><a href="#about">אודות</a></li>
+                    <li><a href="#services">תחומי עיסוק</a></li>
+                    <li><a href="#contact">צור קשר</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>ייצוג משפטי מקצועי ובלתי מתפשר</h1>
+            <p>אנו נלחמים למען הזכויות שלך עם ניסיון של מעל 15 שנה בבתי המשפט.</p>
+            <a href="#contact" class="btn">תיאום פגישת ייעוץ</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">אודות המשרד</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    [תמונת עורכת הדין]
+                </div>
+                <div class="about-text">
+                    <h3>עו"ד דנה כהן</h3>
+                    <p>משרדנו מתמחה במתן פתרונות משפטיים יצירתיים ללקוחות פרטיים ועסקיים כאחד. אנו מאמינים בליווי אישי, שקיפות מלאה ומאבק נחוש להשגת התוצאה הטובה ביותר עבור הלקוח.</p>
+                    <p>עם רקורד מוכח של הצלחות ותודעת שירות גבוהה, אנו הכתובת הבטוחה שלך ברגעים המכריעים.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" style="background-color: var(--light-bg);">
+        <div class="container">
+            <h2 class="section-title">תחומי עיסוק</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>דיני משפחה</h3>
+                    <p>ייצוג בתיקי גירושין, מזונות, משמורת והסכמי ממון ברגישות ומקצועיות.</p>
+                </div>
+                <div class="service-card">
+                    <h3>מקרקעין ונדל"ן</h3>
+                    <p>ליווי עסקאות מכר וקניה, חוזי שכירות ורישום בטאבו.</p>
+                </div>
+                <div class="service-card">
+                    <h3>דיני עבודה</h3>
+                    <p>זכויות עובדים, שימועים, פיצויי פיטורין וייצוג מעסיקים.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">צור קשר</h2>
+            <div class="contact-form">
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">שם מלא</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">אימייל</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">טלפון</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">הודעה</label>
+                        <textarea id="message" name="message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">שלח הודעה</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 כל הזכויות שמורות למשרד עו"ד כהן ושות'.</p>
+    </footer>
+
+</body>
+</html>
